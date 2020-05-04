@@ -1,0 +1,54 @@
+
+{%extends 'homeDir/base.html'%}
+{%load static%}
+
+{% load crispy_forms_tags %}
+
+{%block carousel%}
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="{%static 'homeDir/images/main.jpg'%}" alt="First slide">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+{%endblock carousel%}
+
+
+{%block main%}
+
+        {% if messages%}
+            {% for message in messages%}
+              <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+              </div>
+            {%endfor%}
+        {%endif%}
+        <div class="content-section">
+            <div class="media">
+            <img class="rounded-circle account-img mr-2" src="{{ user.profile.image.url }}" alt='' width="100" height="100">
+            <div class="media-body">
+                <h2 class="account-heading">@{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+                <p class="text-secondary">{{ user.first_name }} {{ user.last_name }}</p>
+                <p>Toplam Paylaşımlar:<br><a class="btn btn-outline-info btn-lg mt-2" href="{%url 'myposts'%}" style="background-color:orange;color:white;border-color:white"> {{total_posts}} </a></p>
+              </div>
+            </div>
+        </div>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Güncelle</legend>
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Güncelle</button>
+        </div>
+      </form>
+      <a class="btn btn-outline-info mb-1" href="{% url 'password_reset' %}">Şifre Güncelle</a>
+
+{%endblock main%}

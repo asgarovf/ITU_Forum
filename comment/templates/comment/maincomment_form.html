@@ -1,0 +1,61 @@
+{%extends "homeDir/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{%block main %}
+  <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+          <img class="rounded-circle account-img mr-2 mb-1" src="{{ post.author.profile.image.url }}" alt='' width="40" height="40"> <a class="mr-2" href="{%url 'user_profile' post.author.username%}">@{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+
+        </div>
+        {% if post.author == user %}
+            <a class=" mt-2 mb-2 btn btn-secondary btn-sm" style='color:blue;background-color:#fafafa;' href="{%url 'post_update' post.id %}"> Güncelle </a>
+            <a class=" btn btn-secondary btn-sm" style='color:red;background-color: #fafafa;' href="{%url 'post_delete' post.id  %}"> Sil </a>
+        {%endif%}
+        <h4 class="article-title"><strong>{{ post.title }}</strong></h4>
+        <p class="article-content">{{ post.content }}</p>
+          {%if post.url%}
+          <a href="{{post.url}}"> Eklenti Linki </a>
+          {%endif%}
+          {%if post.tag%}
+          <a href="#">Taglar: <b>{{post.tag}}</b> </a>
+          {%endif%}
+
+        </div>
+
+
+    </article>
+
+    <div>
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Yorum yap</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-primary " type='submit' style="background-color:#ff9933;border-color:orange;color:white;">Onayla</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    {% for comment in comments reversed %}
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+          <img class="rounded-circle account-img mr-2 mb-1" src="{{ comment.author.profile.image.url }}" alt='' width="40" height="40"> <a class="mr-2" href="{%url 'user_profile' comment.author.username%}">@{{comment.author}}</a>
+            <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title"><strong>{{ comment.title }}</strong></a></h2>
+        <p style="font-weight: 300; font-family:Chivo;" class="article-content">{{ comment.content }}</p>
+        </div>
+
+    </article>
+    {% endfor %}
+
+
+
+{% endblock main %}

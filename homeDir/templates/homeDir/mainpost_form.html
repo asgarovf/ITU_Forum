@@ -1,0 +1,31 @@
+{%extends "homeDir/base.html" %}
+
+{% load crispy_forms_tags %}
+
+
+{%block main %}
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Yazı</legend>
+                {{ form|crispy }}
+                <p style="color:blue"> Taglar: <br>
+                 <a class="btn btn-outline-info">#blg</a>
+                 <a class="btn btn-outline-info">#ehb</a> 
+                 <a class="btn btn-outline-info">#mat</a>
+                 <a class="btn btn-outline-info">#sinav</a>  
+                 <a class="btn btn-outline-info">#boykot</a> 
+                 <a class="btn btn-outline-info">#etkinlik</a> 
+                 <a class="btn btn-outline-info">#spor</a>
+                 <a class="btn btn-outline-info">#sanat</a>  
+                </p>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" style="background-color:orange;color:white;" type="submit">Onayla</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock main %}

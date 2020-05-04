@@ -1,0 +1,86 @@
+{%extends 'homeDir/base.html'%}
+{%load static%}
+
+{%block main%}
+<a class="btn btn-primary mb-3 mt-3" style="background-color:#ff9933;border-color:orange;" href="{%url 'mainpost_create'%}">Yeni Paylaşım</a>
+
+  {%if query%}
+  <h1 id="headerCommunity"> {{q}} için sonuçlar... ({{count}}) </h1>
+  {% for post in posts reversed%}
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+          <img class="rounded-circle account-img mr-2 mb-1" src="{{ post.author.profile.image.url }}" alt='' width="40" height="40"> <a class="mr-2" href="{%url 'user_profile' post.author.username%}">@{{post.author.username}}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h5><a class="article-title" href="{%url 'comment' post.id %}"><strong>{{ post.title }}</strong></a></h5>
+        <p style="font-weight: 300; font-family:Chivo;" class="article-content">{{ post.content }}</p>
+        {%if post.tag%}
+          <a href="#">Taglar: <b>{{post.tag}}</b> </a>
+        {%endif%}
+        </div>
+    </article>
+  {% endfor %}
+
+    {%if page_obj.has_previous%}
+        <a style="background-color:white;color:#243447" class="btn btn-outline-secondary mb-4" href="?page=1&q={{q}}">İlk</a>
+        <a style="background-color:white;color:#243447" class="btn btn-outline-secondary mb-4" href="?page={{page_obj.previous_page_number}}&q={{q}}">Önceki</a>
+      {%endif%}
+
+      {%for num in page_obj.paginator.page_range %}
+        {%if page_obj.number == num %}
+          <a style="background-color:orange;color:white;" class="btn btn-info mb-4" href="?page={{ num }}&q={{q}}">{{ num }}</a>
+          {%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ num }}&q={{q}}">{{ num }}</a>
+        {%endif%}
+      {%endfor%}
+
+      {%if page_obj.has_next%}
+        <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ page_obj.next_page_number }}&q={{q}}">Sonraki</a>
+        <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}&q={{q}}">Sonuncu</a>
+      {%endif%}
+
+  {%else%}
+
+  {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+          <img class="rounded-circle account-img mr-2 mb-1" src="{{ post.author.profile.image.url }}" alt='' width="40" height="40"> <a class="mr-2" href="{%url 'user_profile' post.author.username%}">@{{post.author.username}}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h5><a class="article-title" href="{%url 'comment' post.id %}"><strong>{{ post.title }}</strong></a></h5>
+        <p style="font-weight: 300; font-family:Chivo;" class="article-content">{{ post.content }}</p>
+        {%if post.tag%}
+          <a href="#">Taglar: <b>{{post.tag}}</b> </a>
+        {%endif%}
+        </div>
+    </article>
+  {% endfor %}
+  {%endif%}
+  {% if is_paginated %}
+
+      {%if page_obj.has_previous%}
+        <a style="background-color:white;color:#243447" class="btn btn-outline-secondary mb-4" href="?page=1">İlk</a>
+        <a style="background-color:white;color:#243447" class="btn btn-outline-secondary mb-4" href="?page={{page_obj.previous_page_number}}">Önceki</a>
+      {%endif%}
+
+      {%for num in page_obj.paginator.page_range %}
+        {%if page_obj.number == num %}
+          <a style="background-color:orange;color:white;" class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {%elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+        {%endif%}
+      {%endfor%}
+
+      {%if page_obj.has_next%}
+        <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ page_obj.next_page_number }}">Sonraki</a>
+        <a style="background-color:white;color:#243447" class="btn btn-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Sonuncu</a>
+      {%endif%}
+    {%endif%}
+
+
+
+
+
+{%endblock main%}

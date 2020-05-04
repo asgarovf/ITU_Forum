@@ -1,0 +1,156 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'homeDir/style.css'%}">
+    {%if title%}
+      <title>{{title}}</title>
+    {%else%}
+      <title>İTÜ Forum</title>
+    {%endif%}
+
+    <link rel="icon" href="{%static 'homeDir/images/newlogo.png'%}"> 
+  </head>
+  <body>
+      <header>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark flex-row navBackground">
+             <img class='mr-2' src="{%static 'homeDir/images/itulogo.png'%}" width="30" height="40"> <a id="navHeader" class="nav-link mr-auto" href="{%url 'homepage' %}"> <em>İTÜ Forum</em></a>
+             <button class="navbar-toggler navbar-toggler-dark text-white" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+               <span class= "navbar-toggler-icon"></span>
+             </button>
+             <div class="collapse navbar-collapse navbarMarginLeft" id="navbarNavDropdown">
+               <ul id="navUl" class="navbar-nav mr-auto">
+                 {%if user.is_authenticated%}
+                 <li class="nav-item active">
+                   <a class="nav-link text-center">Hoşgeldin @{{user.username}}!</a>
+                 </li>
+                 {%endif%}
+                 <li class="nav-item active">
+                   <a class="nav-link text-center" href="{%url 'homepage'%}">Ana Sayfa</a>
+                 </li>
+                 <li class="nav-item active flex-start">
+                   <a class="nav-link text-center" href="{%url 'posts'%}">Paylaşımlar</a>
+                 <li class="nav-item ml-2 active flex-start">
+                    <form method="get" action="{%url 'search'%}">
+                      <input type="text" class="form-control" name="q" id="id_q" placeholder="Ara...">
+                    </form>
+                  </li>
+               </ul>
+               {%if user.is_authenticated%}
+               <ul id="navUl" class="navbar-nav ml-auto navbarMarginRight">
+                 <li class="nav-item active">
+                   <a class="nav-link text-center" href="{%url 'profile'%}">Profil</a>
+                 </li>
+                 <li class="nav-item active">
+                   <a class="nav-link text-center" href="{%url 'logout'%}">Çıkış</a>
+                 </li>
+               </ul>
+               {%else%}
+               <ul id="navUl" class="navbar-nav ml-auto navbarMarginRight">
+                 <li class="nav-item active">
+                   <a class="nav-link text-center" href="{%url 'login'%}">Giriş</a>
+                 </li>
+                 <li class="nav-item active">
+                   <a class="nav-link text-center" href="{%url 'register'%}">Kayıt ol</a>
+                 </li>
+               </ul>
+               {%endif%}
+           </div>
+         </nav>
+      </header>
+
+      {%block carousel%}
+
+      {%endblock%}
+
+      <div class="container-fluid">
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-3 display">
+            <div style="border: 1px solid #ffd699;; border-radius: 5px; padding: 5px;">
+                <a class="twitter-timeline" data-width="600" data-height="900" data-theme="light" href="https://twitter.com/itu1773?ref_src=twsrc%5Etfw">Tweets by itu1773</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+          </div>
+
+          <div class="col-sm-12 col-md-8 col-lg-6">
+
+            {%block main%}
+
+
+
+
+
+            {%endblock%}
+          </div>
+
+          <div class="col-sm-8 col-md-4 col-lg-3">
+            <div class="card bg-light mb-3 mt-3">
+              <div class="card-header" style="font-size:20px;">Kurallar</div>
+              <div class="card-body">
+                <h5 class="card-title"><b> 1) Diğer kullanıcılara karşı saygılı olunuz. </b></h5>
+                <p class="card-text">Paylaşımlarda ve yorumlarda tüm kullanıcılara karşı etik olmak gerekmektedir.</p>
+                <h5 class="card-title"><b>2) İTÜ Mailiniz ve Öğrenci Numaranızla Kayıt olunuz.</b></h5>
+                <p class="card-text">Doğru bilgileri girmezseniz sisteme kayıt olamayacaksınız. Uyuşmazlık tespit edilirse hesabınız silinecektir.</p>
+                <h5 class="card-title"><b>3)Paylaşımlar sadece İTÜ ile ilgili olmalıdır.</b></h5>
+                <p class="card-text">Uygun olmayan paylaşımlar silinecektir.</p>
+                <h5 class="card-title"><b>4)Reklam tipli paylaşımlar yasaktır. </b></h5>
+                <p class="card-text">Sadece İTÜ dahili etkinlik reklamlarına izin verilmektedir.</p>
+              </div>
+            </div>
+
+            {%if homepage%}
+              <div class="card bg-light mb-3 mt-3">
+                <div class="card-header" style="font-size:20px;">Tag`lar</div>
+                <div class="card-body">
+                  <a href='/tags/?q=blg'><h5 class="card-title"><b> #blg </b></h5></a>
+                  <a href='/tags/?q=ehb'><h5 class="card-title"><b> #ehb </b></h5></a>
+                  <a href='/tags/?q=mat'><h5 class="card-title"><b> #mat </b></h5></a>
+                  <a href='/tags/?q=sinav'><h5 class="card-title"><b> #sinav </b></h5></a>
+                  <a href='/tags/?q=boykot'><h5 class="card-title"><b> #boykot </b></h5></a>
+                  <a href='/tags/?q=etkinlik'><h5 class="card-title"><b> #etkinlik </b></h5></a>
+                  <a href='/tags/?q=spor'><h5 class="card-title"><b> #spor </b></h5></a>   
+                  <a href='/tags/?q=sanat'><h5 class="card-title"><b> #sanat </b></h5></a>  
+                </div>
+              </div>
+            {%endif%}
+
+
+
+            <div class="displaySmall mt-3">
+              <div style="border: 1px solid #ffd699;; border-radius: 5px; padding: 5px;">
+                  <a class="twitter-timeline" data-width="600" data-height="600" data-theme="light" href="https://twitter.com/itu1773?ref_src=twsrc%5Etfw">Tweets by itu1773</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              </div>
+            </div>
+
+          </div>
+
+
+
+      </div>
+    </div>
+  <footer>
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 footerNav mt-3">
+        <a class="mr-3 ml-3" href="https://asgarov.herokuapp.com/" target= "_blank">© 2020 Copyright: Farhad Asgarov<br><br>
+        <a class="mr-3 ml-3" style="color:#243447" href="https://www.instagram.com/asgarovvv/" target="_blank"><img src="{%static 'homeDir/images/insta.png' %}" alt="" width="23" height="23"></a>
+        <a class="ml-3 mr-3" style="color:#243447" href="https://twitter.com/asgarovf" target="_blank"><img src="{%static 'homeDir/images/twitter.png' %}" alt="" width="23" height="23"></a>
+        <a class="mr-3 ml-3" style="color:#243447" href = "mailto: fasgarov2002@gmail.com"><img src="{%static 'homeDir/images/email.png' %}" alt="" width="23" height="23"></a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </body>
+</html>

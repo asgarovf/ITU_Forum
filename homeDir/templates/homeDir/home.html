@@ -1,0 +1,50 @@
+{%extends 'homeDir/base.html'%}
+
+{% load crispy_forms_tags %}
+{%load static%}
+
+  {%block carousel%}
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="{%static 'homeDir/images/main.jpg'%}" alt="First slide">
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  {%endblock carousel%}
+
+
+{%block main%}
+
+    {% if messages%}
+        {% for message in messages%}
+          <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+          </div>
+        {%endfor%}
+    {%endif%}
+    <a class="btn btn-primary mb-5" style="background-color:#ff9933;border-color:orange;" href="{%url 'mainpost_create'%}">Yeni Paylaşım</a>
+
+    {%if posts%}
+
+    {% for post in posts %}
+      <article class="media content-section">
+          <div class="media-body">
+          <div class="article-metadata">
+            <img class="rounded-circle account-img mr-2 mb-1" src="{{ post.author.profile.image.url }}" alt='' width="40" height="40"> <a class="mr-2" href="{%url 'user_profile' post.author.username%}">@{{post.author.username}}</a>
+              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+          </div>
+          <h5><a class="article-title" href="{%url 'comment' post.id %}"><strong>{{ post.title }}</strong></a></h5>
+          <p style="font-weight: 300; font-family:Chivo;" class="article-content">{{ post.content }}</p>
+          {%if post.tag%}
+          <a href="#">Taglar: <b>{{post.tag}}</b> </a>
+          {%endif%}
+          </div>
+      </article>
+    {% endfor %}
+    {%endif%}
+    <a class="btn btn-primary mt-3" style="background-color:#ff9933;border-color:orange;" href="{%url 'posts'%}">Daha fazla...</a>
+
+{%endblock main%}

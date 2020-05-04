@@ -1,0 +1,29 @@
+{%extends 'homeDir/base.html'%}
+{%load static%}
+
+{% load crispy_forms_tags %}
+
+{%block carousel%}
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="{%static 'homeDir/images/main.jpg'%}" alt="First slide">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+{%endblock carousel%}
+
+
+{%block main%}
+
+    <div class="content-section text-center">
+       <h1 id="headerCommunity" style="text-align: center;">Çıkış yaptınız!</h1>
+        <small class='text-muted'>
+           <a href="{%url 'profile'%}">Yeniden Giriş</a>
+        </small>
+    </div>
+
+
+{%endblock main%}
